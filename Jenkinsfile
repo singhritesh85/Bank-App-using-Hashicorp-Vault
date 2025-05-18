@@ -24,9 +24,9 @@ pipeline{
         stage("Docker Build"){
             steps{
                 sh 'docker system prune -f --all'
-                sh 'docker build -t 027330342406.dkr.ecr.us-east-2.amazonaws.com/bankapp:latest -f Dockerfile-Project-1 .'
+                sh 'docker build -t 027330342406.dkr.ecr.us-east-2.amazonaws.com/bankapp-2:latest -f Dockerfile-Project-1 .'
                 sh 'aws ecr get-login-password --region us-east-2 | docker login --username AWS --password-stdin 027330342406.dkr.ecr.us-east-2.amazonaws.com'
-                sh 'docker push 027330342406.dkr.ecr.us-east-2.amazonaws.com/bankapp:latest'
+                sh 'docker push 027330342406.dkr.ecr.us-east-2.amazonaws.com/bankapp-2:latest'
             }
         }
     }
