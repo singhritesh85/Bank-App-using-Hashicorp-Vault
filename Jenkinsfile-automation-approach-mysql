@@ -16,7 +16,7 @@ pipeline{
                 //MySQL
                 sh 'argocd login argocd.singhritesh85.com --username admin --password $ARGOCD_PASSWORD --skip-test-tls  --grpc-web'
                 sh 'argocd app create mysql-stage --project default --repo https://github.com/singhritesh85/kubernetes-manifests.git --path mysql-stage-aks --dest-namespace mysql --sync-option CreateNamespace=true --dest-server https://aks-cluster-dns-sjx67ai2.hcp.eastus.azmk8s.io:443 --upsert'
-                sh 'argocd app sync mysql'
+                sh 'argocd app sync mysql-stage'
             }
         }
     }
