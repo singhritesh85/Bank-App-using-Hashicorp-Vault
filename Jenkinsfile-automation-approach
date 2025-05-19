@@ -33,8 +33,8 @@ pipeline{
         stage("Deployment"){
             steps{
                 sh 'argocd login argocd.singhritesh85.com --username admin --password $ARGOCD_PASSWORD --skip-test-tls  --grpc-web'
-                sh 'argocd app create bankapp --repo https://github.com/singhritesh85/kubernetes-manifests.git --path bankapp --dest-namespace bankapp --sync-option CreateNamespace=true --dest-server https://kubernetes.default.svc --upsert'
-                sh 'argocd app sync bankapp'
+                sh 'argocd app create bankapp-stage --repo https://github.com/singhritesh85/kubernetes-manifests.git --path bankapp-stage --dest-namespace bankapp --sync-option CreateNamespace=true --dest-server https://aks-cluster-dns-sjx67ai2.hcp.eastus.azmk8s.io:443 --upsert'
+                sh 'argocd app sync bankapp-stage'
             }
         }
     }
