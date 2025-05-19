@@ -9,6 +9,7 @@ pipeline{
     environment{
         JAVA_HOME="/usr/lib/jvm/java-17-amazon-corretto.x86_64"
         PATH="$PATH:$JAVA_HOME/bin:/opt/apache-maven/bin:/opt/node-v16.0.0/bin:/usr/local/bin"
+        ARGOCD_PASSWORD=credentials('ARGOCD_PASSWORD')
     }
     stages{
         stage("Clone-Code"){
@@ -28,6 +29,13 @@ pipeline{
                 sh 'docker build -t 027330342406.dkr.ecr.us-east-2.amazonaws.com/bankapp-1:latest -f Dockerfile-Project-1 .'
                 sh 'aws ecr get-login-password --region us-east-2 | docker login --username AWS --password-stdin 027330342406.dkr.ecr.us-east-2.amazonaws.com'
                 sh 'docker push 027330342406.dkr.ecr.us-east-2.amazonaws.com/bankapp-1:latest'
+            }
+        }
+        stage("Deployment"){
+            steps{
+                sh 'argocd login argocd.singhritesh85.com --username admin --password $ARGOCD_PASSWORD --skip-test-tls  --grpc-web'
+                sh 'argocd app create bankapp --repo https://github.com/singhritesh85/kubernetes-manifests.git --path bankapp --dest-namespace bankapp --sync-option CreateNamespace=true --dest-server https://kubernetes.default.svc --upsert'
+                sh 'argocd app sync bankapp'
             }
         }
     }
