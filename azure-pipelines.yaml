@@ -7,15 +7,16 @@ pool:
   demands:
   - agent.name -equals demo
 
+
 stages:
 - stage: MySQLDeployment
   displayName: MySQLDeployment
   jobs:
   - deployment: MySQLDeployment
     displayName: MySQLDeployment
+    environment: "prod"
     workspace:
       clean: all
-    environment: "prod"
     strategy:
       runOnce:
         deploy:
