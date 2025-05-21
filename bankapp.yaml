@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
       - name: bankapp
-        image: bankappprodcontainer24registry.azurecr.io:$(Build.BuildId)
+        image: bankappprodcontainer24registry.azurecr.io:latest
         ports:
         - containerPort: 8080
         imagePullPolicy: Always
