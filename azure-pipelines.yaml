@@ -7,7 +7,6 @@ pool:
   demands:
   - agent.name -equals demo
 
-
 stages:
 - stage: MySQLDeployment
   displayName: MySQLDeployment
