@@ -8,26 +8,8 @@ pool:
   - agent.name -equals demo
 
 stages:
-- stage: MavenBuild
-  displayName: MavenBuild
-  jobs:    
-  - job: MavenBuild
-    displayName: MavenBuild
-    steps:
-    - task: Maven@4
-      inputs:
-        azureSubscription: 'Azure DevOps Service Connection'
-        mavenPomFile: 'pom.xml'
-        goals: 'clean install'
-        publishJUnitResults: false
-        javaHomeOption: 'JDKVersion'
-        mavenVersionOption: 'Default'
-        mavenAuthenticateFeed: false
-        effectivePomSkip: false
-        sonarQubeRunAnalysis: false
 - stage: MySQLDeployment
   displayName: MySQLDeployment
-  dependsOn: MavenBuild
   jobs:
   - deployment: MySQLDeployment
     displayName: MySQLDeployment
@@ -45,4 +27,4 @@ stages:
               azureResourceGroup: 'bankappprod-rg'
               kubernetesCluster: 'bankappprod-cluster'
               namespace: 'mysql'
-              manifests: 'mysql/*'
+              manifests: 'mysql-stage/*'
