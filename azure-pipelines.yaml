@@ -45,4 +45,4 @@ stages:
               azureResourceGroup: 'bankappprod-rg'
               kubernetesCluster: 'bankappprod-cluster'
               namespace: 'mysql'
-              manifests: 'mysql/'
+              manifests: 'mysql/*'
