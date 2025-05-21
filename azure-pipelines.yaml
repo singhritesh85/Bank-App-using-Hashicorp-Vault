@@ -27,4 +27,4 @@ stages:
               azureResourceGroup: 'bankappprod-rg'
               kubernetesCluster: 'bankappprod-cluster'
               namespace: 'mysql'
-              manifests: 'mysql-stage/*'
+              manifests: 'mysql-stage-aks/*'
