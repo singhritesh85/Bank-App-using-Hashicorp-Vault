@@ -14,18 +14,17 @@ stages:
   - job: MavenBuild
     displayName: MavenBuild
     steps:
-- task: Maven@4
-  inputs:
-    azureSubscription: 'Azure DevOps Service Connection'
-    mavenPomFile: 'pom.xml'
-    goals: 'clean install'
-    publishJUnitResults: true
-    testResultsFiles: '**/surefire-reports/TEST-*.xml'
-    javaHomeOption: 'JDKVersion'
-    mavenVersionOption: 'Default'
-    mavenAuthenticateFeed: false
-    effectivePomSkip: false
-    sonarQubeRunAnalysis: false
+    - task: Maven@4
+      inputs:
+        azureSubscription: 'Azure DevOps Service Connection'
+        mavenPomFile: 'pom.xml'
+        goals: 'clean install'
+        publishJUnitResults: false
+        javaHomeOption: 'JDKVersion'
+        mavenVersionOption: 'Default'
+        mavenAuthenticateFeed: false
+        effectivePomSkip: false
+        sonarQubeRunAnalysis: false
 - stage: MySQLDeployment
   displayName: MySQLDeployment
   dependsOn: MavenBuild
@@ -38,12 +37,12 @@ stages:
         deploy:
           steps:
           - checkout: none
-- task: KubernetesManifest@1
-  inputs:
-    action: 'deploy'
-    connectionType: 'azureResourceManager'
-    azureSubscriptionConnection: 'Azure DevOps Service Connection'
-    azureResourceGroup: 'bankappprod-rg'
-    kubernetesCluster: 'bankappprod-cluster'
-    namespace: 'mysql'
-    manifests: 'mysql'
+          - task: KubernetesManifest@1
+            inputs:
+              action: 'deploy'
+              connectionType: 'azureResourceManager'
+              azureSubscriptionConnection: 'Azure DevOps Service Connection'
+              azureResourceGroup: 'bankappprod-rg'
+              kubernetesCluster: 'bankappprod-cluster'
+              namespace: 'mysql'
+              manifests: 'mysql'
