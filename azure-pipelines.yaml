@@ -13,6 +13,8 @@ stages:
   jobs:
   - deployment: MySQLDeployment
     displayName: MySQLDeployment
+    workspace:
+      clean: all
     environment: "prod"
     strategy:
       runOnce:
